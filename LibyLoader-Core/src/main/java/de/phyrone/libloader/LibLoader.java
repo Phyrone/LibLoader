@@ -65,12 +65,11 @@ public class LibLoader {
     }
 
 
-    public void reqire(String coordinates) throws IOException {
-        reqire(new DefaultArtifact(coordinates));
+    public void require(String coordinates) throws IOException {
+        require(new DefaultArtifact(coordinates));
     }
 
-
-    public void reqire(Artifact artifact) throws IOException {
+    public void require(Artifact artifact) throws IOException {
         try {
             addFileToClassLoader(
                     resolveArtifact(artifact)
