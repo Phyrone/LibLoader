@@ -38,9 +38,20 @@ public class LibLoader {
     private RepositorySystem system;
     private DefaultRepositorySystemSession defaultRepositorySystemSession = MavenRepositorySystemUtils.newSession();
 
-    LibLoader() {
+    private ClassLoader classLoader;
+
+    public LibLoader() {
         if (!(this.getClass().getClassLoader() instanceof URLClassLoader))
             throw new ClassCastException("can't cast Current Classloader to UrlClassloader");
+        init((URLClassLoader) this.getClass().getClassLoader());
+    }
+
+    public LibLoader(URLClassLoader classLoader) {
+        init(classLoader);
+    }
+
+    private void init(URLClassLoader classLoader) {
+        this.classLoader = classLoader;
         DefaultServiceLocator locator = MavenRepositorySystemUtils.newServiceLocator();
         locator.addService(RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class);
         locator.addService(TransporterFactory.class, FileTransporterFactory.class);
@@ -82,7 +93,7 @@ public class LibLoader {
 
 
     private void addFileToClassLoader(File file) throws MalformedURLException, InvocationTargetException, IllegalAccessException {
-        addURLMethod.invoke(getClass().getClassLoader(), file.toURI().toURL());
+        addURLMethod.invoke(classLoader, file.toURI().toURL());
     }
 
     private File resolveArtifact(Artifact artifact) throws ArtifactResolutionException {
