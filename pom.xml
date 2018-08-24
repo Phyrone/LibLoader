@@ -6,7 +6,12 @@
 
     <groupId>de.phyrone</groupId>
     <artifactId>LibLoader</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>MavenDownloader</module>
+        <module>LibyLoader-Core</module>
+    </modules>
 
     <dependencies>
         <dependency>
