@@ -41,7 +41,8 @@ public class LibLauncher {
             }
         });
 
-        LibLoader loader = new LibLoader();
+        URLClassLoader classLoader = new URLClassLoader(new URL[0], LibLauncher.class.getClassLoader());
+        LibLoader loader = new LibLoader(classLoader);
         repositories.forEach(loader::addRepository);
         artifacts.forEach(coordinates -> {
             try {
@@ -53,7 +54,6 @@ public class LibLauncher {
         });
 
         try {
-            URLClassLoader classLoader = new URLClassLoader(new URL[0], LibLauncher.class.getClassLoader());
             Class<?> clazz = Class.forName(mainClass.get(), true, classLoader);
             start(clazz, args);
         } catch (ClassNotFoundException e) {
