@@ -10,5 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>LibLoader-Core</module>
+        <module>LibyLoader-Plugin</module>
     </modules>
 </project>

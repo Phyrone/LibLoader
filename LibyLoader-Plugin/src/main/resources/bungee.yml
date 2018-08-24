@@ -1,0 +1,3 @@
+name: LibLoader
+version: 1.0
+main: de.phyrone.libloader.bungee.BungeePlugin
