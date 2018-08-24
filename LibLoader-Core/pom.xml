@@ -20,12 +20,29 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <properties>
         <mavenResolverVersion>1.1.1</mavenResolverVersion>
         <mavenVersion>3.5.0</mavenVersion>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven.resolver</groupId>
