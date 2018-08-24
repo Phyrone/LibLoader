@@ -56,11 +56,11 @@ public class LibLoader {
         }
     }
 
-    public void addRepositroy(String url) {
+    public void addRepository(String url) {
         repositories.add(new RemoteRepository.Builder(UUID.randomUUID().toString(), "default", url).build());
     }
 
-    public void addRepositroy(RemoteRepository repository) {
+    public void addRepository(RemoteRepository repository) {
         repositories.add(repository);
     }
 
