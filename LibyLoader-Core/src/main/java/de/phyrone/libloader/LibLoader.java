@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class LibLoader {
-    Method addURLMethod;
+    private Method addURLMethod;
     private List<RemoteRepository> repositories = Collections.synchronizedList(Arrays.asList(
             new RemoteRepository.Builder("central", "default", "https://repo.maven.apache.org/maven2/").build(),
             new RemoteRepository.Builder("jitpack.io", "default", "https://jitpack.io/").build()
