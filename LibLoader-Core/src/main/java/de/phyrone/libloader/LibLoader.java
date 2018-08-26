@@ -27,7 +27,6 @@ import java.net.URLClassLoader;
 import java.util.*;
 
 public class LibLoader {
-    private final Object repoSyncer = new Object();
     private Method addURLMethod;
     private List<RemoteRepository> repositories = Collections.synchronizedList(
             new ArrayList<>(
@@ -73,9 +72,7 @@ public class LibLoader {
     }
 
     public void addRepository(RemoteRepository repository) {
-        synchronized (repoSyncer) {
-            repositories.add(repository);
-        }
+        repositories.add(repository);
     }
 
 
@@ -84,15 +81,14 @@ public class LibLoader {
     }
 
     public void require(Artifact artifact) throws IOException {
-        synchronized (repoSyncer) {
-            try {
-                addFileToClassLoader(
-                        resolveArtifact(artifact)
-                );
-            } catch (MalformedURLException | InvocationTargetException | IllegalAccessException | ArtifactResolutionException e) {
-                throw new IOException("could not Load Library!");
-            }
+        try {
+            addFileToClassLoader(
+                    resolveArtifact(artifact)
+            );
+        } catch (MalformedURLException | InvocationTargetException | IllegalAccessException | ArtifactResolutionException e) {
+            throw new IOException("could not Load Library!");
         }
+
 
     }
 
