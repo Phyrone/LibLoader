@@ -1,8 +1,10 @@
 # LibLoader
 [![](https://jitpack.io/v/Phyrone/LibLoader.svg)](https://jitpack.io/#Phyrone/LibLoader) [![Build Status](https://travis-ci.org/Phyrone/LibLoader.svg?branch=master)](https://travis-ci.org/Phyrone/LibLoader)  
 
-#### Its a Library to import Maven-Dependecys at Runtime (java 10 Compatible)
+#### Its a Library to import Maven-Dependecys at Runtime
 ## Usage
+### Important!
+#### Your ParentClassloader must be an URLClassloader
 ```java
 /* Create Libloader */
 LibLoader libLoader = new LibLoader()
@@ -28,8 +30,8 @@ libLoader.addRepository("<Your Maven Repository URL>");
 ##### Version: [![](https://jitpack.io/v/Phyrone/LibLoader.svg)](https://jitpack.io/#Phyrone/LibLoader)
 ```xml
 <dependency>
-	    <groupId>com.github.Phyrone</groupId>
-	    <artifactId>LibLoader</artifactId>
+	    <groupId>com.github.Phyrone.LibLoader</groupId>
+	    <artifactId>LibLoader-Core</artifactId>
 	    <version>VERSION</version>
 </dependency>
 ```
@@ -45,7 +47,7 @@ libLoader.addRepository("<Your Maven Repository URL>");
 ##### Version: [![](https://jitpack.io/v/Phyrone/LibLoader.svg)](https://jitpack.io/#Phyrone/LibLoader)
 ```gradle
 	dependencies {
-	        implementation 'com.github.Phyrone:LibLoader:VERSION'
+	        implementation 'com.github.Phyrone.LibLoader:LibLoader-Core:VERSION'
 	}
 ```
 
