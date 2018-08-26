@@ -25,19 +25,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class LibLoader {
+    private final Object repoSyncer = new Object();
     private Method addURLMethod;
-    private List<RemoteRepository> repositories = Collections.synchronizedList(Arrays.asList(
+    private List<RemoteRepository> repositories = Arrays.asList(
             new RemoteRepository.Builder("central", "default", "https://repo.maven.apache.org/maven2/").build(),
             new RemoteRepository.Builder("jitpack.io", "default", "https://jitpack.io/").build()
-    ));
+    );
     private RepositorySystem system;
     private DefaultRepositorySystemSession defaultRepositorySystemSession = MavenRepositorySystemUtils.newSession();
-
     private ClassLoader classLoader;
 
     public LibLoader() {
@@ -68,11 +67,13 @@ public class LibLoader {
     }
 
     public void addRepository(String url) {
-        repositories.add(new RemoteRepository.Builder(UUID.randomUUID().toString(), "default", url).build());
+        addRepository(new RemoteRepository.Builder(UUID.randomUUID().toString(), "default", url).build());
     }
 
     public void addRepository(RemoteRepository repository) {
-        repositories.add(repository);
+        synchronized (repoSyncer) {
+            repositories.add(repository);
+        }
     }
 
 
@@ -81,12 +82,14 @@ public class LibLoader {
     }
 
     public void require(Artifact artifact) throws IOException {
-        try {
-            addFileToClassLoader(
-                    resolveArtifact(artifact)
-            );
-        } catch (MalformedURLException | InvocationTargetException | IllegalAccessException | ArtifactResolutionException e) {
-            throw new IOException("could not Load Library!");
+        synchronized (repoSyncer) {
+            try {
+                addFileToClassLoader(
+                        resolveArtifact(artifact)
+                );
+            } catch (MalformedURLException | InvocationTargetException | IllegalAccessException | ArtifactResolutionException e) {
+                throw new IOException("could not Load Library!");
+            }
         }
 
     }
