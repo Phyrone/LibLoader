@@ -24,16 +24,18 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class LibLoader {
     private final Object repoSyncer = new Object();
     private Method addURLMethod;
-    private List<RemoteRepository> repositories = Arrays.asList(
-            new RemoteRepository.Builder("central", "default", "https://repo.maven.apache.org/maven2/").build(),
-            new RemoteRepository.Builder("jitpack.io", "default", "https://jitpack.io/").build()
+    private List<RemoteRepository> repositories = Collections.synchronizedList(
+            new ArrayList<>(
+                    Arrays.asList(
+                            new RemoteRepository.Builder("central", "default", "https://repo.maven.apache.org/maven2/").build(),
+                            new RemoteRepository.Builder("jitpack.io", "default", "https://jitpack.io/").build()
+                    )
+            )
     );
     private RepositorySystem system;
     private DefaultRepositorySystemSession defaultRepositorySystemSession = MavenRepositorySystemUtils.newSession();
