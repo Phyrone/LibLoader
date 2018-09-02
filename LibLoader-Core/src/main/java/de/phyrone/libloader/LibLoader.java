@@ -27,7 +27,7 @@ import java.net.URLClassLoader;
 import java.util.*;
 
 public class LibLoader {
-    Set<File> loadedFiles = new HashSet<>();
+    private Set<File> loadedFiles = new HashSet<>();
     private Method addURLMethod;
     private List<RemoteRepository> repositories = Collections.synchronizedList(
             new ArrayList<>(
