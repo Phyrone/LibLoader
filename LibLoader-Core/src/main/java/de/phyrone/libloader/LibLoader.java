@@ -94,7 +94,7 @@ public class LibLoader {
     }
 
 
-    void addFileToClassLoader(File file) throws MalformedURLException, InvocationTargetException, IllegalAccessException {
+    public void addFileToClassLoader(File file) throws MalformedURLException, InvocationTargetException, IllegalAccessException {
         if (!loadedFiles.contains(file)) {
             addURLMethod.invoke(classLoader, file.toURI().toURL());
             loadedFiles.add(file);
@@ -103,7 +103,7 @@ public class LibLoader {
 
     }
 
-    File resolveArtifact(Artifact artifact) throws ArtifactResolutionException {
+    public File resolveArtifact(Artifact artifact) throws ArtifactResolutionException {
         ArtifactRequest artifactRequest = new ArtifactRequest();
         artifactRequest.setArtifact(artifact);
         repositories.forEach(artifactRequest::addRepository);
