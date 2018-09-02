@@ -27,6 +27,7 @@ import java.net.URLClassLoader;
 import java.util.*;
 
 public class LibLoader {
+    Set<File> loadedFiles = new HashSet<>();
     private Method addURLMethod;
     private List<RemoteRepository> repositories = Collections.synchronizedList(
             new ArrayList<>(
@@ -93,11 +94,16 @@ public class LibLoader {
     }
 
 
-    private void addFileToClassLoader(File file) throws MalformedURLException, InvocationTargetException, IllegalAccessException {
-        addURLMethod.invoke(classLoader, file.toURI().toURL());
+    void addFileToClassLoader(File file) throws MalformedURLException, InvocationTargetException, IllegalAccessException {
+        if (!loadedFiles.contains(file)) {
+            addURLMethod.invoke(classLoader, file.toURI().toURL());
+            loadedFiles.add(file);
+        }
+
+
     }
 
-    private File resolveArtifact(Artifact artifact) throws ArtifactResolutionException {
+    File resolveArtifact(Artifact artifact) throws ArtifactResolutionException {
         ArtifactRequest artifactRequest = new ArtifactRequest();
         artifactRequest.setArtifact(artifact);
         repositories.forEach(artifactRequest::addRepository);
